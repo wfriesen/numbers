@@ -1,6 +1,8 @@
+import operator
 import sys
 from itertools import permutations
 
+OPS = {operator.mul: "*", operator.truediv: "/", operator.add: "+", operator.sub: "-"}
 perms = []
 
 
@@ -11,10 +13,12 @@ def build_permutations(start, perm, total_numbers):
         perms.append(newperm)
         return
 
-    for k in ["*", "/", "+", "-"]:
+    for k in OPS.keys():
         build_permutations(
             start + 2, newperm[:start] + [k] + newperm[start:], total_numbers
         )
+
+
 
 
 def main(target, numbers):
@@ -29,23 +33,16 @@ def main(target, numbers):
             return sols[0] == target
 
         left = sols.pop(0)
-        operator = sols.pop(0)
+        op = sols.pop(0)
         right = sols.pop(0)
 
-        if operator == "*":
-            result = left * right
-        elif operator == "/":
-            result = left / right
-        elif operator == "+":
-            result = left + right
-        elif operator == "-":
-            result = left - right
+        result = op(left, right)
 
         return solved([result] + sols)
 
     for perm in perms:
         if solved(perm) is True:
-            print(perm)
+            print([x if type(x) == int else OPS[x] for x in perm])
 
 
 def usage():
