@@ -1,7 +1,6 @@
+import sys
 from itertools import permutations
 
-numbers = [75, 7, 3, 1, 5, 7]
-target = 242
 perms = []
 
 
@@ -15,7 +14,7 @@ def build_permutations(start, perm):
         build_permutations(start + 2, newperm[:start] + [k] + newperm[start:])
 
 
-def main():
+def main(target, numbers):
 
     for i in permutations(numbers):
         perm = list(i)
@@ -46,6 +45,7 @@ def main():
         if solved(perm) is True:
             print(perm)
 
-
 if __name__ == "__main__":
-    main()
+    target = int(sys.argv[1])
+    numbers = [int(x) for x in sys.argv[2:]]
+    main(target, numbers)
