@@ -44,7 +44,6 @@ def main(target, numbers):
         return solved([result] + sols)
 
     for perm in perms:
-        s = solved(perm)
         if solved(perm) is True:
             print(perm)
 
