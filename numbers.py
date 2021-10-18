@@ -19,18 +19,19 @@ def build_permutations(start, perm, total_numbers):
         )
 
 
-
-
 def main(target, numbers):
 
     for i in permutations(numbers):
         perm = list(i)
         build_permutations(1, perm, len(numbers))
 
-    def solved(perm):
+    def solved(initial, perm, steps=0):
+        steps += 1
         sols = perm.copy()
-        if len(sols) == 1:
-            return sols[0] == target
+        if sols[0] == target:
+            return (True, initial[:steps])
+        elif len(sols) == 1:
+            return (sols[0] == target, initial[:steps])
 
         left = sols.pop(0)
         op = sols.pop(0)
@@ -38,11 +39,12 @@ def main(target, numbers):
 
         result = op(left, right)
 
-        return solved([result] + sols)
+        return solved(initial, [result] + sols, steps + 1)
 
     for perm in perms:
-        if solved(perm) is True:
-            print(' '.join([str(x) if type(x) == int else OPS[x] for x in perm]))
+        (solves, solution) = solved(perm.copy(), perm)
+        if solves is True:
+            print(" ".join([str(x) if type(x) == int else OPS[x] for x in solution]))
 
 
 def usage():
