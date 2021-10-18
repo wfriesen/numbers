@@ -42,7 +42,7 @@ def main(target, numbers):
 
     for perm in perms:
         if solved(perm) is True:
-            print([x if type(x) == int else OPS[x] for x in perm])
+            print(' '.join([str(x) if type(x) == int else OPS[x] for x in perm]))
 
 
 def usage():
